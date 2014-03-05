@@ -144,7 +144,8 @@ public class recommendFilesToUsers {
 		//其次存放包含二个关键词的文件
 		//最后存放包含一个关键词的文件
 		String recommend_files="";
-		String user_labels = query_top_n_label(user_id, 3);//设定为3
+		String user_labels = query_top_n_label(user_id, 15);//设定为15，取前3个重点分析
+		System.out.println(user_labels);
 		ArrayList<String> user_label_arraylistArrayList = splitString.getArrayListFromString(user_labels, ",");
 		Set set1=new HashSet();
 		Set set2=new HashSet();
@@ -153,6 +154,17 @@ public class recommendFilesToUsers {
 		set1=query_files_contains_label(user_id, user_label_arraylistArrayList.get(0));
 		set2=query_files_contains_label(user_id, user_label_arraylistArrayList.get(1));
 		set3=query_files_contains_label(user_id, user_label_arraylistArrayList.get(2));
+		
+		//将后12个关键词对应的文件记录下来，
+		ArrayList<String> recommend_files_of_the_last_twelve = new ArrayList<>();
+		for(int i=3;i<user_label_arraylistArrayList.size();i++){
+			Set set_temp = new HashSet<>();
+			set_temp=query_files_contains_label(user_id, user_label_arraylistArrayList.get(i));
+			Iterator<String>iter_temp = set_temp.iterator();
+			while(iter_temp.hasNext()){
+				recommend_files_of_the_last_twelve.add(iter_temp.next());
+			}
+		}
 //		System.out.println("set1:"+set1);
 //		System.out.println("set2:"+set2);
 //		System.out.println("set3:"+set3);
@@ -214,6 +226,11 @@ public class recommendFilesToUsers {
 		while(itera3.hasNext()){
 			recommend_files_list_tempList.add(itera3.next());
 		}
+		
+		//获取后面12个关键词包含的文件
+		for(int j=0;j<recommend_files_of_the_last_twelve.size();j++){
+			recommend_files_list_tempList.add(recommend_files_of_the_last_twelve.get(j));
+		}
 		System.out.println(recommend_files_list_tempList.size());
 		
 //		//重新整理recommend_files_list_tempList，去掉重复元素
@@ -225,7 +242,7 @@ public class recommendFilesToUsers {
 		}
 		System.out.println(list_final.size());
 		
-		//recommend_files_list_tempList
+		//recommend_files_list_tempList 变为字符串
 		for(int i=0;i<list_final.size();i++){
 			if(recommend_files.equals("")){
 				recommend_files=recommend_files+list_final.get(i);
@@ -242,7 +259,7 @@ public class recommendFilesToUsers {
 	}
 	
 	public static void main(String[] args) {
-		get_recommend_files_to_user("0");
+		get_recommend_files_to_user("黄绍建");
 	}
 
 }

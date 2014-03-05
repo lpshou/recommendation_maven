@@ -117,12 +117,10 @@ public class getKeyword {
 		getSplitString(context);
 		String keyword = getTopN();
 		return keyword;
-		
 	}
 
 	public static void main(String[] args) {
 		
-
 	}
 	
 }
