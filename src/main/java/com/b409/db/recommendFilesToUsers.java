@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,8 +58,8 @@ public class recommendFilesToUsers {
 	}
 	
 	//查询拥有某个标签且不属于某个用户的所有文件
-	public static Set<String> query_files_contains_label(String user_id,String keyword){
-		Set<String>files = new HashSet<>();
+	public static Set query_files_contains_label(String user_id,String keyword){
+		Set files = new HashSet();
 		try{
 			//加载驱动程序
 			Class.forName(driver);
@@ -71,11 +73,9 @@ public class recommendFilesToUsers {
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()){
 				String file_path = rs.getString("file_path");
-				files.add(file_path);
-
-				System.out.println(files);
-				
+				files.add(file_path);	
 			}
+			System.out.println(files);
 			rs.close();
 			conn.close();
 		}catch(ClassNotFoundException e) {   
@@ -123,16 +123,16 @@ public class recommendFilesToUsers {
 		
 	}
 	//根据用户标签分析得到用户喜欢的且不属于自己的文件（用户标签个数默认为3）
-		public static String get_recommend_files_to_user(String user_id){
-			String recommend_files="";
-			String user_labels = query_top_n_label(user_id, 3);
-			ArrayList<String> user_label_arraylistArrayList = splitString.getArrayListFromString(user_labels, ",");
-			System.out.println(user_label_arraylistArrayList.size());
-			
-			//根据每一个标签查询数据库，得到拥有此标签的所有文件
-			
-			return recommend_files;
-		}
+	public static String get_recommend_files_to_user(String user_id){
+		String recommend_files="";
+		String user_labels = query_top_n_label(user_id, 3);
+		ArrayList<String> user_label_arraylistArrayList = splitString.getArrayListFromString(user_labels, ",");
+		System.out.println(user_label_arraylistArrayList.size());
+		
+		//根据每一个标签查询数据库，得到拥有此标签的所有文件
+		
+		return recommend_files;
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 //		insert_into_recommend_files_to_users("0", "c:/b.txt");
