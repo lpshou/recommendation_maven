@@ -11,7 +11,7 @@ public class splitString {
 			while(tokenizer.hasMoreTokens()){
 				String strTemp = tokenizer.nextToken();
 				keywordsArrayList.add(strTemp);
-				System.out.println(strTemp);
+//				System.out.println(strTemp);
 			}
 			return keywordsArrayList;
 		}

@@ -8,6 +8,7 @@ import com.b409.commonTool.getKeyword;
 import com.b409.commonTool.noChangeVariable;
 import com.b409.db.DBUtil;
 import com.b409.db.recommendFileKeywords;
+import com.b409.db.recommendFilesToUsers;
 import com.b409.db.recommendUserLabel;
 
 public class createKeyWordsForFile {
@@ -24,6 +25,7 @@ public class createKeyWordsForFile {
 		recommendUserLabel.insert_into_recommend_user_label(user_id, keywords);
 		
 		//更新用户推荐表
+		recommendFilesToUsers.get_recommend_files_to_user(user_id);
 	}
 	public static void main(String[] args){
 		createKeyWordsForFile("2",noChangeVariable.PATH, "d:/");
