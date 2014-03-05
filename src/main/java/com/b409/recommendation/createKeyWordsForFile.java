@@ -19,7 +19,7 @@ public class createKeyWordsForFile {
 		System.out.println(keywords);
 		
 		//更新文件关键字表
-		recommendFileKeywords.insert_into_recommend_file_keywords(user_id, file_source_path, keywords);	
+		recommendFileKeywords.insert_into_recommend_file_keywords(user_id, file_target_path, keywords);	
 		
 		//更新该用户标签表
 		recommendUserLabel.insert_into_recommend_user_label(user_id, keywords);
@@ -28,7 +28,7 @@ public class createKeyWordsForFile {
 		recommendFilesToUsers.get_recommend_files_to_user(user_id);
 	}
 	public static void main(String[] args){
-		createKeyWordsForFile("2",noChangeVariable.PATH, "d:/");
+		createKeyWordsForFile("刘鹏",noChangeVariable.PATH, "d:/");
 
 		
 	}

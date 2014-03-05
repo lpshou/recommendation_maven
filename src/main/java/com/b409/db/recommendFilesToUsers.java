@@ -44,7 +44,6 @@ public class recommendFilesToUsers {
 					label=label+","+keywordss;
 				}
 			}
-//			System.out.println(label);
 			rs.close();
 			conn.close();
 		}catch(ClassNotFoundException e) {   
@@ -55,7 +54,6 @@ public class recommendFilesToUsers {
 			} catch(Exception e) {   
 			e.printStackTrace();   
 			}  
-		
 		return label;
 	}
 	
@@ -73,15 +71,14 @@ public class recommendFilesToUsers {
 				return files;
 				
 			}
+			
 			Statement statement = conn.createStatement();
 			String sql = "select * from recommend_file_keywords where keyword='"+keyword+"' and user_id != '"+user_id+"'";
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()){
 				String file_path = rs.getString("file_path");
-//				System.out.println(file_path);
 				files.add(file_path);	
 			}
-//			System.out.println(files);
 			rs.close();
 			conn.close();
 		}catch(ClassNotFoundException e) {   
@@ -110,12 +107,23 @@ public class recommendFilesToUsers {
 				System.out.println("连接数据库...failed！");
 				return 0;
 			}
-			String sql = "insert into recommend_files_to_users(user_id,recommendfiles) values(?,?)";
-			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
-			ps.setString(1, user_id);
-			ps.setString(2, recommendfiles);
 			
-			int i = ps.executeUpdate();
+			Statement statement = conn.createStatement();
+			String sql = "select * from recommend_files_to_users where user_id = '"+user_id+"'";
+			ResultSet rs = statement.executeQuery(sql);
+			//如果不存在记录
+			if(!rs.next()){
+				String sql1 = "insert into recommend_files_to_users(user_id,recommendfiles) values(?,?)";
+				PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql1);
+				ps.setString(1, user_id);
+				ps.setString(2, recommendfiles);
+				int i = ps.executeUpdate();
+			}else{
+			//如果存在记录，则更新用户推荐文件
+				String sqlUpdate = "update recommend_files_to_users set recommendfiles='"+recommendfiles+"' where user_id = '"+user_id +"'";
+				Statement stat = conn.createStatement();
+				stat.executeUpdate(sqlUpdate);
+			}
 			conn.close();
 		}catch(ClassNotFoundException e) {   
 			System.out.println("Sorry,can`t find the Driver!");   
@@ -138,9 +146,6 @@ public class recommendFilesToUsers {
 		String recommend_files="";
 		String user_labels = query_top_n_label(user_id, 3);//设定为3
 		ArrayList<String> user_label_arraylistArrayList = splitString.getArrayListFromString(user_labels, ",");
-//		System.out.println(user_label_arraylistArrayList.get(0));
-//		System.out.println(user_label_arraylistArrayList.get(1));
-//		System.out.println(user_label_arraylistArrayList.get(2));
 		Set set1=new HashSet();
 		Set set2=new HashSet();
 		Set set3=new HashSet();
@@ -148,9 +153,9 @@ public class recommendFilesToUsers {
 		set1=query_files_contains_label(user_id, user_label_arraylistArrayList.get(0));
 		set2=query_files_contains_label(user_id, user_label_arraylistArrayList.get(1));
 		set3=query_files_contains_label(user_id, user_label_arraylistArrayList.get(2));
-		System.out.println("set1:"+set1);
-		System.out.println("set2:"+set2);
-		System.out.println("set3:"+set3);
+//		System.out.println("set1:"+set1);
+//		System.out.println("set2:"+set2);
+//		System.out.println("set3:"+set3);
 //		
 		//将set转化为list保存
 		List list1=new ArrayList(set1);
@@ -220,7 +225,7 @@ public class recommendFilesToUsers {
 		}
 		System.out.println(list_final.size());
 		
-//		//recommend_files_list_tempList
+		//recommend_files_list_tempList
 		for(int i=0;i<list_final.size();i++){
 			if(recommend_files.equals("")){
 				recommend_files=recommend_files+list_final.get(i);
@@ -229,7 +234,7 @@ public class recommendFilesToUsers {
 			}
 		}
 		
-//		//根据每一个标签查询数据库，得到拥有此标签的所有文件
+		//根据每一个标签查询数据库，得到拥有此标签的所有文件
 		
 		System.out.println(recommend_files);
 		insert_into_recommend_files_to_users(user_id, recommend_files);

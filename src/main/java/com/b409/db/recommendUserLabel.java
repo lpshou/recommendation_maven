@@ -31,8 +31,7 @@ public class recommendUserLabel {
 				String user_id = rs.getString("user_id");
 				String keyword = rs.getString("keyword");
 				Integer count = rs.getInt("count");
-
-				System.out.println(user_id+"  "+keyword+"  "+count);
+//				System.out.println(user_id+"  "+keyword+"  "+count);
 				
 			}
 			rs.close();
@@ -87,7 +86,6 @@ public class recommendUserLabel {
 					stat.executeUpdate(sqlUpdate);
 				}
 			}
-			
 			conn.close();
 		}catch(ClassNotFoundException e) {   
 			System.out.println("Sorry,can`t find the Driver!");   
@@ -97,16 +95,11 @@ public class recommendUserLabel {
 			} catch(Exception e) {   
 			e.printStackTrace();   
 			}  
-		
 		return flagInteger;
-		
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-//		query_user_label();
 		insert_into_recommend_user_label("0", "爱情,可乐");
 
 	}
-
 }
