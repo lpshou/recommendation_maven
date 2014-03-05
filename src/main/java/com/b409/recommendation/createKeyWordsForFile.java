@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import com.b409.commonTool.getContextFromFile;
-import com.b409.commonTool.getKeyWord_second;
 import com.b409.commonTool.getKeyword;
 import com.b409.commonTool.noChangeVariable;
 import com.b409.db.DBUtil;

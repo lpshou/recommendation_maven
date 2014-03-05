@@ -42,7 +42,7 @@ public class recommendFilesToUsers {
 					label=label+","+keywordss;
 				}
 			}
-			System.out.println(label);
+//			System.out.println(label);
 			rs.close();
 			conn.close();
 		}catch(ClassNotFoundException e) {   
@@ -66,16 +66,20 @@ public class recommendFilesToUsers {
 			
 			//连接数据库
 			java.sql.Connection conn = DriverManager.getConnection(url, user, password);
-			if(!conn.isClosed())
-				System.out.println("连接数据库...Ok！");
+			if(conn.isClosed()){
+				System.out.println("连接数据库...failed！");
+				return files;
+				
+			}
 			Statement statement = conn.createStatement();
 			String sql = "select * from recommend_file_keywords where keyword='"+keyword+"' and user_id != '"+user_id+"'";
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()){
 				String file_path = rs.getString("file_path");
+				System.out.println(file_path);
 				files.add(file_path);	
 			}
-			System.out.println(files);
+//			System.out.println(files);
 			rs.close();
 			conn.close();
 		}catch(ClassNotFoundException e) {   
@@ -100,11 +104,11 @@ public class recommendFilesToUsers {
 			
 			//连接数据库
 			java.sql.Connection conn = DriverManager.getConnection(url, user, password);
-			if(!conn.isClosed())
-				System.out.println("连接数据库...Ok！");
-
+			if(conn.isClosed()){
+				System.out.println("连接数据库...failed！");
+				return 0;
+			}
 			String sql = "insert into recommend_files_to_users(user_id,recommendfiles) values(?,?)";
-
 			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
 			ps.setString(1, user_id);
 			ps.setString(2, recommendfiles);
@@ -125,9 +129,20 @@ public class recommendFilesToUsers {
 	//根据用户标签分析得到用户喜欢的且不属于自己的文件（用户标签个数默认为3）
 	public static String get_recommend_files_to_user(String user_id){
 		String recommend_files="";
-		String user_labels = query_top_n_label(user_id, 3);
+		String user_labels = query_top_n_label(user_id, 3);//设定为3
 		ArrayList<String> user_label_arraylistArrayList = splitString.getArrayListFromString(user_labels, ",");
-		System.out.println(user_label_arraylistArrayList.size());
+		System.out.println(user_label_arraylistArrayList.get(0));
+		System.out.println(user_label_arraylistArrayList.get(1));
+		System.out.println(user_label_arraylistArrayList.get(2));
+		Set set1=new HashSet();
+		Set set2=new HashSet();
+		Set set3=new HashSet();
+		set1=query_files_contains_label(user_id, user_label_arraylistArrayList.get(0));
+		set2=query_files_contains_label(user_id, user_label_arraylistArrayList.get(1));
+		set3=query_files_contains_label(user_id, user_label_arraylistArrayList.get(2));
+//		System.out.println("set1:"+set1.toString());
+//		System.out.println("set2:"+set2.toString());
+//		System.out.println("set3:"+set3.toString());
 		
 		//根据每一个标签查询数据库，得到拥有此标签的所有文件
 		
@@ -137,8 +152,8 @@ public class recommendFilesToUsers {
 		// TODO Auto-generated method stub
 //		insert_into_recommend_files_to_users("0", "c:/b.txt");
 //		query_top_n_label("0",3);
-//		get_recommend_files_to_user("0");
-		query_files_contains_label("0", "恢复");
+		get_recommend_files_to_user("0");
+
 		
 		
 	}
