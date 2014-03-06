@@ -8,13 +8,17 @@ import com.b409.db.recommendUserLabel;
 public class createKeyWordsForFile {
 	public static void createKeyWordsForFile(String user_id,String file_source_path,String file_target_path){
 		String file_name="";
-		file_name=file_source_path.substring(file_source_path.lastIndexOf("/")+1);
+		if(file_source_path.contains("/")){
+			file_name=file_source_path.substring(file_source_path.lastIndexOf("/")+1);
+			
+		}else if(file_source_path.contains("\\")){
+			file_name=file_source_path.substring(file_source_path.lastIndexOf("\\")+1);
+			
+		}
 //		System.out.print(file_name);
 		
 		//获得关键词
 		String keywords = getKeyword.getKeywordInString(file_source_path);
-		
-//		System.out.println(keywords);
 		System.out.println("成功获取文章"+file_source_path+"的关键词!");
 		
 		//更新文件关键字表
@@ -31,7 +35,7 @@ public class createKeyWordsForFile {
 	}
 
 	public static void main(String[] args){
-//		createKeyWordsForFile("刘鹏","C:/Users/lpshou2/Desktop/计算机相关.docx","c:/jisuanjixiangguan.docx");
+//		createKeyWordsForFile("刘鹏","C:\\Users\\lpshou2\\Desktop\\计算机相关.docx","c:/jisuanjixiangguan.docx");
 		createKeyWordsForFile(args[0],args[1],args[2]);
 	}
 
