@@ -1,16 +1,9 @@
 package com.b409.recommendation;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import com.b409.commonTool.getContextFromFile;
 import com.b409.commonTool.getKeyword;
-import com.b409.commonTool.noChangeVariable;
-import com.b409.db.DBUtil;
 import com.b409.db.recommendFileKeywords;
 import com.b409.db.recommendFilesToUsers;
 import com.b409.db.recommendUserLabel;
-import com.b409.recommendation_maven.test;
 
 public class createKeyWordsForFile {
 	public static void createKeyWordsForFile(String user_id,String file_source_path,String file_target_path){
@@ -32,8 +25,9 @@ public class createKeyWordsForFile {
 		System.out.println(v1+"  "+v2+"  "+v3);
 	}
 	public static void main(String[] args){
-//		createKeyWordsForFile(args[0], args[1], args[3]);
-		test(args[0], args[1], args[2]);
+//		test(args[0], args[1], args[2]);
+		createKeyWordsForFile("wan西安僧", "C:/Users/lpshou2/Desktop/计算机相关.docx", "test");
+		System.out.println("haha");
 		
 	}
 

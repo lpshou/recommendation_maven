@@ -13,6 +13,30 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
+  <build>
+	<plugins>
+		<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.b409.recommendation.createKeyWordsForFile</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>
+							jar-with-dependencies
+						</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
+	</plugins>
+  </build>
+  
+
+
 
   <dependencies>
     <dependency>
@@ -47,8 +71,11 @@
         <version>2.9.2</version>  
     </dependency>  
     
-
-
-
+    <dependency>  
+        <groupId>org.wltea.analyzer</groupId>  
+        <artifactId>IKAnalyzer3.2.0Stable</artifactId>  
+        <version>3.2.0</version>  
+    </dependency>  
+    
   </dependencies>
 </project>

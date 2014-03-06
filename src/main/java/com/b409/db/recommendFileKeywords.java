@@ -105,8 +105,5 @@ public class recommendFileKeywords {
 		return flagInteger;
 	}
 	
-	public static void main(String[] args){
-		insert_into_recommend_file_keywords("0", "D:/A.txt", "喜剧");
-	}
 
 }

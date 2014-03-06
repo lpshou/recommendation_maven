@@ -98,8 +98,5 @@ public class recommendUserLabel {
 		return flagInteger;
 	}
 
-	public static void main(String[] args) {
-		insert_into_recommend_user_label("0", "爱情,可乐");
 
-	}
 }

@@ -156,9 +156,9 @@ public class recommendFilesToUsers {
 		set3=query_files_contains_label(user_id, user_label_arraylistArrayList.get(2));
 		
 		//将后12个关键词对应的文件记录下来，
-		ArrayList<String> recommend_files_of_the_last_twelve = new ArrayList<>();
+		ArrayList<String> recommend_files_of_the_last_twelve = new ArrayList();
 		for(int i=3;i<user_label_arraylistArrayList.size();i++){
-			Set set_temp = new HashSet<>();
+			Set set_temp = new HashSet();
 			set_temp=query_files_contains_label(user_id, user_label_arraylistArrayList.get(i));
 			Iterator<String>iter_temp = set_temp.iterator();
 			while(iter_temp.hasNext()){
@@ -258,8 +258,5 @@ public class recommendFilesToUsers {
 		return recommend_files;
 	}
 	
-	public static void main(String[] args) {
-		get_recommend_files_to_user("黄绍建");
-	}
 
 }

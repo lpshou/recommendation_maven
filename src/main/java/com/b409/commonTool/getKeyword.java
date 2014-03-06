@@ -1,5 +1,6 @@
 package com.b409.commonTool;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +14,10 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.store.LockObtainFailedException;
+import org.apache.tika.config.TikaConfig;
+import org.apache.tika.utils.ParseUtils;
 import org.wltea.analyzer.lucene.IKQueryParser;
+
 
 /**
  * 自动提取关键字
@@ -25,6 +29,7 @@ import org.wltea.analyzer.lucene.IKQueryParser;
  *
  */
 public class getKeyword {
+	
 	static Map<String,Integer> map =new HashMap<String,Integer>();
 	
 	
@@ -116,11 +121,8 @@ public class getKeyword {
 		String context = getContextFromFile.getContext(filePath);
 		getSplitString(context);
 		String keyword = getTopN();
+		System.out.println(keyword);
 		return keyword;
-	}
-
-	public static void main(String[] args) {
-		
 	}
 	
 }
