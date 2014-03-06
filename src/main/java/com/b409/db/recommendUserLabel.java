@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.b409.commonTool.splitString;
 import com.mysql.jdbc.PreparedStatement;
 
 public class recommendUserLabel {
@@ -31,8 +32,6 @@ public class recommendUserLabel {
 				String user_id = rs.getString("user_id");
 				String keyword = rs.getString("keyword");
 				Integer count = rs.getInt("count");
-//				System.out.println(user_id+"  "+keyword+"  "+count);
-				
 			}
 			rs.close();
 			conn.close();
@@ -49,7 +48,8 @@ public class recommendUserLabel {
 	//插入
 	public static Integer insert_into_recommend_user_label(String user_id, String keywords){
 		Integer flagInteger=0;
-		ArrayList<String> keywordList = recommendFileKeywords.split(keywords);
+//		ArrayList<String> keywordList = recommendFileKeywords.split(keywords);
+		ArrayList<String> keywordList = splitString.getArrayListFromString(keywords, ",");
 		
 		try{
 			//加载驱动程序
@@ -68,8 +68,6 @@ public class recommendUserLabel {
 				
 				//如果不存在keyword记录，则添加一条记录
 				if(!rs.next()){
-					System.out.println("keyword: '" + keyword + "'不存在....所以...你懂得，添加进去！");
-					
 					String sqlInsert = "insert into recommend_user_label(user_id,keyword,count) values(?,?,?)";
 					PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sqlInsert);
 					ps.setString(1, user_id);
@@ -78,8 +76,6 @@ public class recommendUserLabel {
 					ps.executeUpdate();
 				//如果记录存在，则将count值加1
 				}else{
-				
-					System.out.println("keyword: '" + keyword + "'存在....所以...你懂得，将该关键字的次数加1");
 					int temp=1;
 					String sqlUpdate = "update recommend_user_label set count= count+1 where user_id = '"+user_id +"' and keyword = '"+keyword+"'";
 					Statement stat = conn.createStatement();

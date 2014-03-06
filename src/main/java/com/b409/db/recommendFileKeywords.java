@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import com.b409.commonTool.splitString;
 import com.mysql.jdbc.PreparedStatement;
 
 public class recommendFileKeywords {
@@ -15,17 +16,6 @@ public class recommendFileKeywords {
 	public static String user = "root";
 	public static String password = "123456";
 	
-	//将keywords切分成单个单词放入数组
-	public static ArrayList<String> split(String keywords){
-		ArrayList<String> keywordsArrayList = new ArrayList<String>();
-		StringTokenizer tokenizer = new StringTokenizer(keywords,",");
-		while(tokenizer.hasMoreTokens()){
-			String strTemp = tokenizer.nextToken();
-			keywordsArrayList.add(strTemp);
-//			System.out.println(strTemp);
-		}
-		return keywordsArrayList;
-	}
 	
 	//查询
 	public static void query_recommend_file_keywords(){
@@ -44,7 +34,6 @@ public class recommendFileKeywords {
 				int user_id = rs.getInt("user_id");
 				String file_path = rs.getString("file_path");
 				String keyword =  rs.getString("keyword");
-//				System.out.println(user_id+"  "+keyword+"  "+file_path);
 			}
 			rs.close();
 			conn.close();
@@ -58,10 +47,14 @@ public class recommendFileKeywords {
 			}  
 	}
 	
-	//插入
+	//插入用户关键词，
+	//如果该用户的该篇文章对应的keywords已经存在，则将次数加1
+	//如果该用户的该篇文章对应的keywords不存在，则添加一条记录
 	public static Integer insert_into_recommend_file_keywords(String user_id, String file_path, String keywords){
 		Integer flagInteger=0;
-		ArrayList<String> keywordList = recommendFileKeywords.split(keywords);
+//		ArrayList<String> keywordList = recommendFileKeywords.split(keywords);
+		ArrayList<String> keywordList = splitString.getArrayListFromString(keywords, ",");
+		
 		
 		try{
 			//加载驱动程序

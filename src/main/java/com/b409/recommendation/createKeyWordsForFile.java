@@ -10,25 +10,23 @@ public class createKeyWordsForFile {
 		
 		//获得关键词
 		String keywords = getKeyword.getKeywordInString(file_source_path);
-		System.out.println(keywords);
+		System.out.println("成功获取文章"+file_source_path+"的关键词!");
 		
 		//更新文件关键字表
 		recommendFileKeywords.insert_into_recommend_file_keywords(user_id, file_target_path, keywords);	
-//		
-//		//更新该用户标签表
-		recommendUserLabel.insert_into_recommend_user_label(user_id, keywords);
-//		
-//		//更新用户推荐表
-		recommendFilesToUsers.get_recommend_files_to_user(user_id);
-	}
-	public static void test(String v1,String v2,String v3){
-		System.out.println(v1+"  "+v2+"  "+v3);
-	}
-	public static void main(String[] args){
-//		test(args[0], args[1], args[2]);
-		createKeyWordsForFile(args[0],args[1],args[2]);
-		System.out.println("haha,so,,,,succeed");
+		System.out.println("成功更新文章"+file_target_path+"的关键词!");
 		
+		//更新该用户标签表
+		recommendUserLabel.insert_into_recommend_user_label(user_id, keywords);
+		System.out.println("成功更新用户"+user_id+"标签");
+
+		//更新用户推荐表
+		recommendFilesToUsers.get_recommend_files_to_user(user_id);
+		System.out.println("成功生成推荐列表");
+	}
+
+	public static void main(String[] args){
+		createKeyWordsForFile("test","C:/Users/lpshou2/Desktop/计算机相关.docx","d:/test/");
 	}
 
 }

@@ -69,7 +69,6 @@ public class recommendFilesToUsers {
 			if(conn.isClosed()){
 				System.out.println("连接数据库...failed！");
 				return files;
-				
 			}
 			
 			Statement statement = conn.createStatement();
@@ -95,8 +94,6 @@ public class recommendFilesToUsers {
 	//插入
 	public static Integer insert_into_recommend_files_to_users(String user_id, String recommendfiles){
 		Integer flagInteger=0;
-//		ArrayList<String> keyword = recommendFileKeywords.split(keywords);
-		
 		try{
 			//加载驱动程序
 			Class.forName(driver);
@@ -165,17 +162,13 @@ public class recommendFilesToUsers {
 				recommend_files_of_the_last_twelve.add(iter_temp.next());
 			}
 		}
-//		System.out.println("set1:"+set1);
-//		System.out.println("set2:"+set2);
-//		System.out.println("set3:"+set3);
-//		
+		
 		//将set转化为list保存
 		List list1=new ArrayList(set1);
 		List list2=new ArrayList(set2);
 		List list3=new ArrayList(set3);
-//		
-//
-//		//recommend_files_list_temp用于临时保存推荐文件
+
+		//recommend_files_list_temp用于临时保存推荐文件
 		List recommend_files_list_tempList = new ArrayList();
 		//获取包含三个关键词的文件
 		set1.retainAll(set2);
@@ -184,9 +177,8 @@ public class recommendFilesToUsers {
 		while(iter.hasNext()){
 			recommend_files_list_tempList.add(iter.next());
 		}
-//		System.out.println(recommend_files_list_tempList.size());
-//		
-//		//获取包含两个关键词的文件
+		
+		//获取包含两个关键词的文件
 		set1=new HashSet(list1);
 		set2=new HashSet(list2);
 		set1.retainAll(set2);
@@ -208,9 +200,8 @@ public class recommendFilesToUsers {
 		while(iterator3.hasNext()){
 			recommend_files_list_tempList.add(iterator3.next());
 		}
-//		System.out.println(recommend_files_list_tempList.size());
-//		
-//		//获取包含一个关键词的文件
+		
+		//获取包含一个关键词的文件
 		set1=new HashSet(list1);
 		set2=new HashSet(list2);
 		set3=new HashSet(list3);
@@ -231,16 +222,14 @@ public class recommendFilesToUsers {
 		for(int j=0;j<recommend_files_of_the_last_twelve.size();j++){
 			recommend_files_list_tempList.add(recommend_files_of_the_last_twelve.get(j));
 		}
-//		System.out.println(recommend_files_list_tempList.size());
 		
-//		//重新整理recommend_files_list_tempList，去掉重复元素
+		//重新整理recommend_files_list_tempList，去掉重复元素
 		List list_final = new ArrayList<String>();
 		for(int i=0;i<recommend_files_list_tempList.size();i++){
 			if(!list_final.contains(recommend_files_list_tempList.get(i))){
 				list_final.add(recommend_files_list_tempList.get(i));
 			}
 		}
-//		System.out.println(list_final.size());
 		
 		//recommend_files_list_tempList 变为字符串
 		for(int i=0;i<list_final.size();i++){
@@ -251,9 +240,7 @@ public class recommendFilesToUsers {
 			}
 		}
 		
-		//根据每一个标签查询数据库，得到拥有此标签的所有文件
-		
-//		System.out.println(recommend_files);
+		//将向用户推荐的文件插入数据库
 		insert_into_recommend_files_to_users(user_id, recommend_files);
 		return recommend_files;
 	}

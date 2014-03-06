@@ -26,6 +26,7 @@ import org.wltea.analyzer.lucene.IKQueryParser;
  * 2：根据每个词组在文章中检索出现的次数
  * 3：采用HashMap,进行词频统计（注意：HashMap效率不是很高.网上有很多词频统计算法，这里不一一列举）
  * @author zhugf 2010-04-13
+ * 采用的开源代码，部分修正，by liupeng
  *
  */
 public class getKeyword {
@@ -87,7 +88,6 @@ public class getKeyword {
 		//排序前    
 		for (int i = 0; i < infoIds.size(); i++) {    
 			String id = infoIds.get(i).toString();    
-			//System.out.println(id);    
 		}    
 		//排序    
 		Collections.sort(infoIds, new Comparator<Map.Entry<String, Integer>>() {    
@@ -96,27 +96,16 @@ public class getKeyword {
 				return (o2.getValue() - o1.getValue());    
 			}    
 			});    
-//		//排序后    （源代码）
-//		for (int i = 0; i < infoIds.size(); i++) {    
-//			//String id = infoIds.get(i).toString();    
-//			String id = infoIds.get(i).getKey();
-//			keys=keys+id+",";
-//			//System.out.println(id);    
-//		}  
 
 		//排序后    （获取top5结果）
 		for (int i = 0; i < infoIds.size()&& i<5; i++) {    
-			//String id = infoIds.get(i).toString();    
 			String id = infoIds.get(i).getKey();
 			keys=keys+id+",";
-			//System.out.println(id);    
 		}  
 		return keys;
 	}
 	
-
-	
-	//从一篇文章中提取关键词
+	//从文章中提取关键词
 	public static String getKeywordInString(String filePath){
 		String context = getContextFromFile.getContext(filePath);
 		getSplitString(context);
