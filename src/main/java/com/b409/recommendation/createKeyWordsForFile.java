@@ -31,7 +31,8 @@ public class createKeyWordsForFile {
 	}
 
 	public static void main(String[] args){
-		createKeyWordsForFile("刘鹏","C:/Users/lpshou2/Desktop/计算机相关.docx","c:/jisuanjixiangguan.docx");
+//		createKeyWordsForFile("刘鹏","C:/Users/lpshou2/Desktop/计算机相关.docx","c:/jisuanjixiangguan.docx");
+		createKeyWordsForFile(args[0],args[1],args[2]);
 	}
 
 }

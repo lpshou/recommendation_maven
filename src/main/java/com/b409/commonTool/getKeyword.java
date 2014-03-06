@@ -98,7 +98,7 @@ public class getKeyword {
 			});    
 
 		//排序后    （获取top5结果）
-		for (int i = 0; i < infoIds.size()&& i<5; i++) {    
+		for (int i = 0; i < infoIds.size()&& i<10; i++) {    
 			String id = infoIds.get(i).getKey();
 			keys=keys+id+",";
 		}  
