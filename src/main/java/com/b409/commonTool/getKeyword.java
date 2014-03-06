@@ -104,7 +104,7 @@ public class getKeyword {
 //			//System.out.println(id);    
 //		}  
 
-		//排序后    （获取top15结果）
+		//排序后    （获取top5结果）
 		for (int i = 0; i < infoIds.size()&& i<5; i++) {    
 			//String id = infoIds.get(i).toString();    
 			String id = infoIds.get(i).getKey();
@@ -116,12 +116,11 @@ public class getKeyword {
 	
 
 	
-	
+	//从一篇文章中提取关键词
 	public static String getKeywordInString(String filePath){
 		String context = getContextFromFile.getContext(filePath);
 		getSplitString(context);
 		String keyword = getTopN();
-		System.out.println(keyword);
 		return keyword;
 	}
 	

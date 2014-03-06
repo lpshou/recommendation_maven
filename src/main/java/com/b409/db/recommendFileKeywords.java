@@ -22,7 +22,7 @@ public class recommendFileKeywords {
 		while(tokenizer.hasMoreTokens()){
 			String strTemp = tokenizer.nextToken();
 			keywordsArrayList.add(strTemp);
-			System.out.println(strTemp);
+//			System.out.println(strTemp);
 		}
 		return keywordsArrayList;
 	}
@@ -44,7 +44,7 @@ public class recommendFileKeywords {
 				int user_id = rs.getInt("user_id");
 				String file_path = rs.getString("file_path");
 				String keyword =  rs.getString("keyword");
-				System.out.println(user_id+"  "+keyword+"  "+file_path);
+//				System.out.println(user_id+"  "+keyword+"  "+file_path);
 			}
 			rs.close();
 			conn.close();
@@ -69,8 +69,8 @@ public class recommendFileKeywords {
 			
 			//连接数据库
 			java.sql.Connection conn = DriverManager.getConnection(url, user, password);
-			if(!conn.isClosed())
-				System.out.println("连接数据库...Ok！");
+			if(conn.isClosed())
+				System.out.println("连接数据库...failed！");
 			
 			for(int i=0;i<keywordList.size();i++){
 				//首先查询判断该用户的该篇文章对应的keywords是否已经存在

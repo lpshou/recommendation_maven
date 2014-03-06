@@ -22,6 +22,7 @@ public class getContextFromFile {
         return result;  
     } 
 	
+	//从文件中读取文件内容，返回文件内容值(方法2)
 	public static String getTxtContent(File file){ 
 		Tika tika=new Tika();
 		String content=null;

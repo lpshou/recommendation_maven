@@ -26,8 +26,8 @@ public class createKeyWordsForFile {
 	}
 	public static void main(String[] args){
 //		test(args[0], args[1], args[2]);
-		createKeyWordsForFile("wan西安僧", "C:/Users/lpshou2/Desktop/计算机相关.docx", "test");
-		System.out.println("haha");
+		createKeyWordsForFile(args[0],args[1],args[2]);
+		System.out.println("haha,so,,,,succeed");
 		
 	}
 

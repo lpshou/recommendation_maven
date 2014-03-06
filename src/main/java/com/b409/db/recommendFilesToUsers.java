@@ -145,7 +145,7 @@ public class recommendFilesToUsers {
 		//最后存放包含一个关键词的文件
 		String recommend_files="";
 		String user_labels = query_top_n_label(user_id, 15);//设定为15，取前3个重点分析
-		System.out.println(user_labels);
+//		System.out.println(user_labels);
 		ArrayList<String> user_label_arraylistArrayList = splitString.getArrayListFromString(user_labels, ",");
 		Set set1=new HashSet();
 		Set set2=new HashSet();
@@ -184,7 +184,7 @@ public class recommendFilesToUsers {
 		while(iter.hasNext()){
 			recommend_files_list_tempList.add(iter.next());
 		}
-		System.out.println(recommend_files_list_tempList.size());
+//		System.out.println(recommend_files_list_tempList.size());
 //		
 //		//获取包含两个关键词的文件
 		set1=new HashSet(list1);
@@ -208,7 +208,7 @@ public class recommendFilesToUsers {
 		while(iterator3.hasNext()){
 			recommend_files_list_tempList.add(iterator3.next());
 		}
-		System.out.println(recommend_files_list_tempList.size());
+//		System.out.println(recommend_files_list_tempList.size());
 //		
 //		//获取包含一个关键词的文件
 		set1=new HashSet(list1);
@@ -231,7 +231,7 @@ public class recommendFilesToUsers {
 		for(int j=0;j<recommend_files_of_the_last_twelve.size();j++){
 			recommend_files_list_tempList.add(recommend_files_of_the_last_twelve.get(j));
 		}
-		System.out.println(recommend_files_list_tempList.size());
+//		System.out.println(recommend_files_list_tempList.size());
 		
 //		//重新整理recommend_files_list_tempList，去掉重复元素
 		List list_final = new ArrayList<String>();
@@ -240,7 +240,7 @@ public class recommendFilesToUsers {
 				list_final.add(recommend_files_list_tempList.get(i));
 			}
 		}
-		System.out.println(list_final.size());
+//		System.out.println(list_final.size());
 		
 		//recommend_files_list_tempList 变为字符串
 		for(int i=0;i<list_final.size();i++){
@@ -253,7 +253,7 @@ public class recommendFilesToUsers {
 		
 		//根据每一个标签查询数据库，得到拥有此标签的所有文件
 		
-		System.out.println(recommend_files);
+//		System.out.println(recommend_files);
 		insert_into_recommend_files_to_users(user_id, recommend_files);
 		return recommend_files;
 	}

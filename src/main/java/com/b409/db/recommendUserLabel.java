@@ -22,8 +22,8 @@ public class recommendUserLabel {
 			
 			//连接数据库
 			java.sql.Connection conn = DriverManager.getConnection(url, user, password);
-			if(!conn.isClosed())
-				System.out.println("Succeeded connecting to the Database!");
+			if(conn.isClosed())
+				System.out.println("连接数据库...failed！");
 			Statement statement = conn.createStatement();
 			String sql = "select * from recommend_user_label";
 			ResultSet rs = statement.executeQuery(sql);
@@ -57,8 +57,8 @@ public class recommendUserLabel {
 			
 			//连接数据库
 			java.sql.Connection conn = DriverManager.getConnection(url, user, password);
-			if(!conn.isClosed())
-				System.out.println("Succeeded connecting to the Database!");
+			if(conn.isClosed())
+				System.out.println("连接数据库...failed！");
 			for(int i=0;i<keywordList.size();i++){
 				//针对每一个keyword进行操作
 				String keyword = keywordList.get(i);
