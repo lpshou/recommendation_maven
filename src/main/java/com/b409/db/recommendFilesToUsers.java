@@ -34,7 +34,7 @@ public class recommendFilesToUsers {
 				System.out.println("连接数据库...failed！");
 
 			Statement statement = conn.createStatement();
-			String sql = "select * from recommend_user_label where user_id='"+user_id+"' order by count desc limit " + n;
+			String sql = "select * from filemanage_recommend_user_label where user_id='"+user_id+"' order by count desc limit " + n;
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()){
 				String keywordss = rs.getString("keyword");
@@ -72,7 +72,7 @@ public class recommendFilesToUsers {
 			}
 			
 			Statement statement = conn.createStatement();
-			String sql = "select * from recommend_file_keywords where keyword='"+keyword+"' and user_id != '"+user_id+"'";
+			String sql = "select * from filemanage_recommend_file_keywords where keyword='"+keyword+"' and user_id != '"+user_id+"'";
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()){
 				String file_path = rs.getString("file_path");
@@ -106,18 +106,18 @@ public class recommendFilesToUsers {
 			}
 			
 			Statement statement = conn.createStatement();
-			String sql = "select * from recommend_files_to_users where user_id = '"+user_id+"'";
+			String sql = "select * from filemanage_recommend_files_to_users where user_id = '"+user_id+"'";
 			ResultSet rs = statement.executeQuery(sql);
 			//如果不存在记录
 			if(!rs.next()){
-				String sql1 = "insert into recommend_files_to_users(user_id,recommendfiles) values(?,?)";
+				String sql1 = "insert into filemanage_recommend_files_to_users(user_id,recommendfiles) values(?,?)";
 				PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql1);
 				ps.setString(1, user_id);
 				ps.setString(2, recommendfiles);
 				int i = ps.executeUpdate();
 			}else{
 			//如果存在记录，则更新用户推荐文件
-				String sqlUpdate = "update recommend_files_to_users set recommendfiles='"+recommendfiles+"' where user_id = '"+user_id +"'";
+				String sqlUpdate = "update filemanage_recommend_files_to_users set recommendfiles='"+recommendfiles+"' where user_id = '"+user_id +"'";
 				Statement stat = conn.createStatement();
 				stat.executeUpdate(sqlUpdate);
 			}

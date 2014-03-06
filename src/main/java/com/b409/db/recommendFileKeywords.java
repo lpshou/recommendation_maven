@@ -18,7 +18,7 @@ public class recommendFileKeywords {
 	
 	
 	//查询
-	public static void query_recommend_file_keywords(){
+	public static void query_filemanage_recommend_file_keywords(){
 		try{
 			//加载驱动程序
 			Class.forName(driver);
@@ -28,12 +28,13 @@ public class recommendFileKeywords {
 			if(!conn.isClosed())
 				System.out.println("Succeeded connecting to the Database!");
 			Statement statement = conn.createStatement();
-			String sql = "select * from recommend_file_keywords";
+			String sql = "select * from filemanage_recommend_file_keywords";
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()){
 				int user_id = rs.getInt("user_id");
 				String file_path = rs.getString("file_path");
 				String keyword =  rs.getString("keyword");
+				String file_name = rs.getString("file_name");
 			}
 			rs.close();
 			conn.close();
@@ -50,12 +51,9 @@ public class recommendFileKeywords {
 	//插入用户关键词，
 	//如果该用户的该篇文章对应的keywords已经存在，则将次数加1
 	//如果该用户的该篇文章对应的keywords不存在，则添加一条记录
-	public static Integer insert_into_recommend_file_keywords(String user_id, String file_path, String keywords){
+	public static Integer insert_into_filemanage_recommend_file_keywords(String user_id, String file_path, String keywords,String file_name){
 		Integer flagInteger=0;
-//		ArrayList<String> keywordList = recommendFileKeywords.split(keywords);
 		ArrayList<String> keywordList = splitString.getArrayListFromString(keywords, ",");
-		
-		
 		try{
 			//加载驱动程序
 			Class.forName(driver);
@@ -70,16 +68,20 @@ public class recommendFileKeywords {
 				//针对每一个keyword进行操作
 				String keyword = keywordList.get(i);
 				Statement statement = conn.createStatement();
-				String sql = "select * from recommend_file_keywords where user_id = '"+user_id +"' and keyword = '"+keyword+"'";
+				String sql = "select * from filemanage_recommend_file_keywords where user_id = '"
+							+ user_id + "' and keyword = '"
+						    + keyword + "' and file_path = '"
+						    +file_path+"'";
 				ResultSet rs = statement.executeQuery(sql);
 				
 				//如果不存在keyword记录，则添加一条记录
 				if(!rs.next()){
-					String sqlInsert = "insert into recommend_file_keywords(user_id,file_path,keyword) values(?,?,?)";
+					String sqlInsert = "insert into filemanage_recommend_file_keywords(user_id,file_path,keyword,file_name) values(?,?,?,?)";
 					PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sqlInsert);
 					ps.setString(1, user_id);
 					ps.setString(2, file_path);
 					ps.setString(3, keyword);
+					ps.setString(4, file_name);
 					ps.executeUpdate();
 				}else{
 					//不执行操作
