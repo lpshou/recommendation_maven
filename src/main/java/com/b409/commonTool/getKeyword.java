@@ -18,6 +18,8 @@ import org.apache.tika.config.TikaConfig;
 import org.apache.tika.utils.ParseUtils;
 import org.wltea.analyzer.lucene.IKQueryParser;
 
+import com.b409.db.recommendFileContent;
+
 
 /**
  * 自动提取关键字
@@ -106,8 +108,8 @@ public class getKeyword {
 	}
 	
 	//从文章中提取关键词
-	public static String getKeywordInString(String filePath){
-		String context = getContextFromFile.getContext(filePath);
+	public static String getKeywordInString(String context){
+//		String context = getContextFromFile.getContext(filePath);
 		BooleanQuery.setMaxClauseCount(10000);
 		getSplitString(context);
 		String keyword = getTopN();

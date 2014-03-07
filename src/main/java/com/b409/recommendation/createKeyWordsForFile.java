@@ -1,6 +1,10 @@
 package com.b409.recommendation;
 
+import org.apache.lucene.analysis.KeywordTokenizer;
+
+import com.b409.commonTool.getContextFromFile;
 import com.b409.commonTool.getKeyword;
+import com.b409.db.recommendFileContent;
 import com.b409.db.recommendFileKeywords;
 import com.b409.db.recommendFilesToUsers;
 import com.b409.db.recommendUserLabel;
@@ -15,11 +19,19 @@ public class createKeyWordsForFile {
 			file_name=file_source_path.substring(file_source_path.lastIndexOf("\\")+1);
 			
 		}
-//		System.out.print(file_name);
+		
+		//获取文件内容
+		String context = getContextFromFile.getContext(file_source_path);
+		System.out.println("内容："+context);
+		
+		//将文件摘要插入数据库
+		recommendFileContent.insert_into_filemanage_recommend_file_content(file_target_path, context);
 		
 		//获得关键词
-		String keywords = getKeyword.getKeywordInString(file_source_path);
-		System.out.println("成功获取文章"+file_source_path+"的关键词!");
+		String keywords = getKeyword.getKeywordInString(context);
+		System.out.println("成功获取文章"+file_source_path+"的关键词!"+keywords);
+		
+		
 		
 		//更新文件关键字表
 		recommendFileKeywords.insert_into_filemanage_recommend_file_keywords(user_id, file_target_path, keywords,file_name);	
@@ -35,7 +47,7 @@ public class createKeyWordsForFile {
 	}
 
 	public static void main(String[] args){
-//		createKeyWordsForFile("刘鹏","C:\\Users\\lpshou2\\Desktop\\计算机相关.docx","c:/jisuanjixiangguan.docx");
+//		createKeyWordsForFile("吉祥","C:\\Users\\lpshou2\\Desktop\\刘鹏_计算机相关2.docx","c:/jisuanjixiangguan.docx");
 		createKeyWordsForFile(args[0],args[1],args[2]);
 	}
 

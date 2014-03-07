@@ -144,13 +144,21 @@ public class recommendFilesToUsers {
 		String user_labels = query_top_n_label(user_id, 15);//设定为15，取前3个重点分析
 //		System.out.println(user_labels);
 		ArrayList<String> user_label_arraylistArrayList = splitString.getArrayListFromString(user_labels, ",");
+	
 		Set set1=new HashSet();
 		Set set2=new HashSet();
 		Set set3=new HashSet();
 		//得到每个关键词对应的文件，结果放入set中
-		set1=query_files_contains_label(user_id, user_label_arraylistArrayList.get(0));
-		set2=query_files_contains_label(user_id, user_label_arraylistArrayList.get(1));
-		set3=query_files_contains_label(user_id, user_label_arraylistArrayList.get(2));
+		if(user_label_arraylistArrayList.size()>=1){
+			set1=query_files_contains_label(user_id, user_label_arraylistArrayList.get(0));
+		}
+		if(user_label_arraylistArrayList.size()>=2){
+			set2=query_files_contains_label(user_id, user_label_arraylistArrayList.get(1));
+		}
+		if(user_label_arraylistArrayList.size()>=3){
+			set3=query_files_contains_label(user_id, user_label_arraylistArrayList.get(2));
+		}
+		
 		
 		//将后12个关键词对应的文件记录下来，
 		ArrayList<String> recommend_files_of_the_last_twelve = new ArrayList();
