@@ -22,7 +22,7 @@ public class createKeyWordsForFile {
 		
 		//获取文件内容
 		String context = getContextFromFile.getContext(file_source_path);
-		System.out.println("内容："+context);
+//		System.out.println("内容："+context);
 		
 		//将文件摘要插入数据库
 		recommendFileContent.insert_into_filemanage_recommend_file_content(file_target_path, context);
@@ -47,7 +47,7 @@ public class createKeyWordsForFile {
 	}
 
 	public static void main(String[] args){
-//		createKeyWordsForFile("吉祥1","C:/Users/lpshou2/Desktop/刘鹏_计算机相关3.docx","c:/jisuanjixiangguan.docx");
+//		createKeyWordsForFile("吉祥1","C:/Users/lpshou2/Desktop刘鹏_计算机相关3.docx","c:/jisuanjixiangguan.docx");
 		createKeyWordsForFile(args[0],args[1],args[2]);
 	}
 
