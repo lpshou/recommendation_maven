@@ -47,7 +47,7 @@ public class createKeyWordsForFile {
 	}
 
 	public static void main(String[] args){
-//		createKeyWordsForFile("吉祥","C:\\Users\\lpshou2\\Desktop\\刘鹏_计算机相关2.docx","c:/jisuanjixiangguan.docx");
+//		createKeyWordsForFile("吉祥1","C:/Users/lpshou2/Desktop/刘鹏_计算机相关3.docx","c:/jisuanjixiangguan.docx");
 		createKeyWordsForFile(args[0],args[1],args[2]);
 	}
 
