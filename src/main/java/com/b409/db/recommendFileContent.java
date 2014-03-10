@@ -6,14 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.b409.commonTool.databaseConfig;
 import com.b409.commonTool.splitString;
 import com.mysql.jdbc.PreparedStatement;
 
-public class recommendFileContent {
-	public static String driver = "com.mysql.jdbc.Driver";
-	public static String url = "jdbc:mysql://192.168.0.87:3306/mcloud";
-	public static String user = "root";
-	public static String password = "123456";
+public class recommendFileContent implements databaseConfig{
 	//插入文章摘要信息
 	public static Integer insert_into_filemanage_recommend_file_content(String file_path, String file_contents){
 		String file_content="";
@@ -33,7 +30,6 @@ public class recommendFileContent {
 			if(conn.isClosed())
 				System.out.println("连接数据库...failed！");
 			
-
 			Statement statement = conn.createStatement();
 			String sql = "select * from filemanage_recommend_file_content where file_path = '"
 						+ file_path + "' and content = '"
@@ -49,6 +45,7 @@ public class recommendFileContent {
 				ps.executeUpdate();
 			}else{
 				//不执行操作
+//				System.out.println("存在");
 			}
 			conn.close();
 		}catch(ClassNotFoundException e) {   

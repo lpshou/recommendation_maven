@@ -6,44 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.b409.commonTool.databaseConfig;
 import com.b409.commonTool.splitString;
 import com.mysql.jdbc.PreparedStatement;
 
-public class recommendUserLabel {
-	public static String driver = "com.mysql.jdbc.Driver";
-	public static String url = "jdbc:mysql://192.168.0.87:3306/mcloud";
-	public static String user = "root";
-	public static String password = "123456";
-	
-	//查询
-	public static void query_user_label(){
-		try{
-			//加载驱动程序
-			Class.forName(driver);
-			
-			//连接数据库
-			java.sql.Connection conn = DriverManager.getConnection(url, user, password);
-			if(conn.isClosed())
-				System.out.println("连接数据库...failed！");
-			Statement statement = conn.createStatement();
-			String sql = "select * from filemanage_recommend_user_label";
-			ResultSet rs = statement.executeQuery(sql);
-			while(rs.next()){
-				String user_id = rs.getString("user_id");
-				String keyword = rs.getString("keyword");
-				Integer count = rs.getInt("count");
-			}
-			rs.close();
-			conn.close();
-		}catch(ClassNotFoundException e) {   
-			System.out.println("Sorry,can`t find the Driver!");   
-			e.printStackTrace();   
-			} catch(SQLException e) {   
-			e.printStackTrace();   
-			} catch(Exception e) {   
-			e.printStackTrace();   
-			}  
-	}
+public class recommendUserLabel implements databaseConfig{
 	
 	//插入
 	public static Integer insert_into_recommend_user_label(String user_id, String keywords){

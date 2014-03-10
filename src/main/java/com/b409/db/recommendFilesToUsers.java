@@ -12,14 +12,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.b409.commonTool.databaseConfig;
 import com.b409.commonTool.splitString;
 import com.mysql.jdbc.PreparedStatement;
 
-public class recommendFilesToUsers {
-	public static String driver = "com.mysql.jdbc.Driver";
-	public static String url = "jdbc:mysql://192.168.0.87:3306/mcloud";
-	public static String user = "root";
-	public static String password = "123456";
+public class recommendFilesToUsers implements databaseConfig{
 
 	//查询用户标签
 	public static String query_top_n_label(String user_id,int n){
@@ -57,7 +54,8 @@ public class recommendFilesToUsers {
 		return label;
 	}
 	
-	//查询拥有某个标签且不属于某个用户的所有文件
+	//查询拥有某个标签的其他用户共享的所有文件
+	//三个限制条件：1）有某个标签；2）其他用户的；3）共享的
 	public static Set query_files_contains_label(String user_id,String keyword){
 		Set files = new HashSet();
 		try{
@@ -72,7 +70,9 @@ public class recommendFilesToUsers {
 			}
 			
 			Statement statement = conn.createStatement();
-			String sql = "select * from filemanage_recommend_file_keywords where keyword='"+keyword+"' and user_id != '"+user_id+"'";
+			String sql = "select * from filemanage_recommend_file_keywords where keyword='"
+					+keyword+"' and user_id != '"
+					+user_id+"' and file_acl = 'public'";
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()){
 				String file_path = rs.getString("file_path");

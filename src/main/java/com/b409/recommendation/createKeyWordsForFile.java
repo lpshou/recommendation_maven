@@ -1,6 +1,5 @@
 package com.b409.recommendation;
 
-import org.apache.lucene.analysis.KeywordTokenizer;
 
 import com.b409.commonTool.getContextFromFile;
 import com.b409.commonTool.getKeyword;
@@ -10,7 +9,7 @@ import com.b409.db.recommendFilesToUsers;
 import com.b409.db.recommendUserLabel;
 
 public class createKeyWordsForFile {
-	public static void createKeyWordsForFile(String user_id,String file_source_path,String file_target_path){
+	public static void createKeyWordsForFile(String user_id,String file_source_path,String file_target_path,String file_acl){
 		String file_name="";
 		if(file_source_path.contains("/")){
 			file_name=file_source_path.substring(file_source_path.lastIndexOf("/")+1);
@@ -22,7 +21,6 @@ public class createKeyWordsForFile {
 		
 		//获取文件内容
 		String context = getContextFromFile.getContext(file_source_path);
-//		System.out.println("内容："+context);
 		
 		//将文件摘要插入数据库
 		recommendFileContent.insert_into_filemanage_recommend_file_content(file_target_path, context);
@@ -30,11 +28,9 @@ public class createKeyWordsForFile {
 		//获得关键词
 		String keywords = getKeyword.getKeywordInString(context);
 		System.out.println("成功获取文章"+file_source_path+"的关键词!"+keywords);
-		
-		
-		
+
 		//更新文件关键字表
-		recommendFileKeywords.insert_into_filemanage_recommend_file_keywords(user_id, file_target_path, keywords,file_name);	
+		recommendFileKeywords.insert_into_filemanage_recommend_file_keywords(user_id, file_target_path, keywords,file_name,file_acl);	
 		System.out.println("成功更新文章"+file_target_path+"的关键词!");
 		
 		//更新该用户标签表 
@@ -47,8 +43,8 @@ public class createKeyWordsForFile {
 	}
 
 	public static void main(String[] args){
-//		createKeyWordsForFile("吉祥1","C:/Users/lpshou2/Desktop刘鹏_计算机相关3.docx","c:/jisuanjixiangguan.docx");
-		createKeyWordsForFile(args[0],args[1],args[2]);
+//		createKeyWordsForFile("liupeng","C:/Documents and Settings/Administrator/桌面/test2.txt","c:/test1.txt","public");
+		createKeyWordsForFile(args[0],args[1],args[2],args[3]);
 	}
 
 }
